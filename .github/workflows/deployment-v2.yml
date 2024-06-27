@@ -88,5 +88,13 @@ jobs:
         run: echo "${{ needs.build.outputs.script-file }}" 
       - name: Deploy to S3
         run: echo "Deploying to S3..."
-
+  report:
+    needs: [test, build, deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "Someting went wrong"
+          echo ${{github}}
 
